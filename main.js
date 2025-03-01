@@ -17,8 +17,7 @@ videoContainer.appendChild(video);
 const zoomControls = document.createElement('div');
 zoomControls.className = 'zoom-controls';
 zoomControls.innerHTML = `
-  <button id="zoomIn">+</button>
-  <button id="zoomOut">-</button>
+  <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1">
 `;
 container.appendChild(zoomControls);
 
@@ -36,12 +35,7 @@ navigator.mediaDevices
 	})
 	.catch((error) => console.error('Error accessing camera:', error));
 
-document.getElementById('zoomIn').addEventListener('click', () => {
-	zoomLevel = Math.min(zoomLevel + 0.1, 3);
-	video.style.transform = `scale(${zoomLevel})`;
-});
-
-document.getElementById('zoomOut').addEventListener('click', () => {
-	zoomLevel = Math.max(zoomLevel - 0.1, 1);
+document.getElementById('zoomSlider').addEventListener('input', (event) => {
+	zoomLevel = event.target.value;
 	video.style.transform = `scale(${zoomLevel})`;
 });
